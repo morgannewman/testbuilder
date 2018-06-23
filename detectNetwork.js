@@ -63,13 +63,18 @@ var detectNetwork = function(cardNumber) {
 
   // Check Discover length and prefix
   let isDiscover = 
-    cardNumber.slice(0,4) == '6011'
+    (cardNumber.slice(0,4) === '6011'
+    ||
+    (Number(cardNumber.slice(0,3)) >= 644 && Number(cardNumber.slice(0,3)) <= 649)
+    ||
+    cardNumber.slice(0,2) == '65')
     &&
     (cardNumber.length === 16 || cardNumber.length === 19);
 
   if (isDiscover) {
     return 'Discover';
   }
+
   // Check Maestro length and prefix
   let isMaestro = 
     (cardNumber.slice(0,4) == '5018' || cardNumber.slice(0,4) == '5020' || cardNumber.slice(0,4) == '5038' || cardNumber.slice(0,4) == '6304')
@@ -80,20 +85,12 @@ var detectNetwork = function(cardNumber) {
     return 'Maestro';
   }
 
-  let isChinaUnionPay = 
-    cardNumber.slice(0,2) == '65'
-    &&
-    (cardNumber.length === 16 || cardNumber.length === 19);
-
+  let isChinaUnionPay;
   if (isChinaUnionPay) {
     return 'China UnionPay';
   }
 
-  let isSwitch = 
-    (Number(cardNumber.slice(0,3)) >= 644 && Number(cardNumber.slice(0,3)) <= 649)
-    &&
-    (cardNumber.length === 16 || cardNumber.length === 19);
-
+  let isSwitch;
   if (isSwitch) {
     return 'Switch';
   }
