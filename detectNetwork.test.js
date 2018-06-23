@@ -159,20 +159,12 @@ describe('Discover', function() {
     }
 
     // 65 prefix
-    it('has a prefix of 65 and a length of ' + length, function() {
-      detectNetwork('65' + '1'.repeat(length-2)).should.equal('Discover');
-    });
-
-
+    +function(length) {
+      it('has a prefix of 65 and a length of ' + length, function() {
+        detectNetwork('65' + '1'.repeat(length-2)).should.equal('Discover');
+      });
+    }(length);
   }
-  
-  it('has a prefix of 6011 and a length of 16', function() {
-    detectNetwork('6011567890123456').should.equal('Discover');
-  });
-
-  it('has a prefix of 6011 and a length of 19', function() {
-    detectNetwork('6011567890123456789').should.equal('Discover');
-  });
 });
 
 describe('Maestro', function() {
