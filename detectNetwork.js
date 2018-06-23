@@ -15,6 +15,28 @@ var detectNetwork = function(cardNumber) {
   // Create array representation of cardNumber  
   let cardNumArr = cardNumber.split('');
 
+  // Check Visa length and prefix
+  let isVisa = 
+    cardNumArr[0] == 4
+    &&
+    (cardNumber.length === 13 || cardNumber.length === 16 || cardNumber.length === 19);
+  
+  if (isVisa) {
+    return 'Visa';
+  }
+
+  // Check MasterCard length and prefix
+  let isMasterCard = 
+    cardNumArr[0] == 5
+    &&
+    (cardNumArr[1] == 1 || cardNumArr[1] == 2 || cardNumArr[1] == 3 || cardNumArr[1] == 4 || cardNumArr[1] == 5)
+    &&
+    cardNumber.length === 16;
+  
+  if (isMasterCard) {
+    return 'MasterCard';
+  }
+
   // Check Diner Club length and prefix
   let isDinersClub = 
     cardNumArr[0] == 3
@@ -42,7 +64,16 @@ var detectNetwork = function(cardNumber) {
 
 };
 
-console.log(detectNetwork('38345678901234'));
-console.log(detectNetwork('39345678901234'));
-console.log(detectNetwork('343456789012345'));
-console.log(detectNetwork('373456789012345'));
+
+detectNetwork('38345678901234');
+detectNetwork('39345678901234');
+detectNetwork('343456789012345');
+detectNetwork('373456789012345');
+detectNetwork('4123456789012');
+detectNetwork('4123456789012345');
+detectNetwork('4123456789012345678');
+detectNetwork('5112345678901234');
+detectNetwork('5212345678901234');
+detectNetwork('5312345678901234');
+detectNetwork('5412345678901234');
+detectNetwork('5512345678901234');
