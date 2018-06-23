@@ -63,12 +63,21 @@ var detectNetwork = function(cardNumber) {
 
   // Check Discover length and prefix
   let isDiscover = 
-    cardNumArr.slice(0,4).join('') == '6011'
+    cardNumber.slice(0,4) == '6011'
     &&
     (cardNumber.length === 16 || cardNumber.length === 19);
 
   if (isDiscover) {
     return 'Discover';
+  }
+  // Check Maestro length and prefix
+  let isMaestro = 
+    (cardNumber.slice(0,4) == '5018' || cardNumber.slice(0,4) == '5020' || cardNumber.slice(0,4) == '5038' || cardNumber.slice(0,4) == '6304')
+    &&
+    (cardNumber.length >= 12 && cardNumber.length <= 19);
+
+  if (isMaestro) {
+    return 'Maestro';
   }
 
 };
