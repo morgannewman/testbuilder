@@ -134,20 +134,25 @@ describe('MasterCard', function() {
  
   it('has a prefix of 55 and a length of 16', function() {
     detectNetwork('5512345678901234').should.equal('MasterCard');
-  })
+  });
  
 });
 
 describe('Discover', function() {
   // Tests without a function will be marked as "pending" and not run
   // Implement these tests (and others) and make them pass!
-  it('has a prefix of 6011 and a length of 16');
-  it('has a prefix of 6011 and a length of 19');
+  it('has a prefix of 6011 and a length of 16', function() {
+    detectNetwork('6011567890123456').should.equal('Discover');
+  });
+
+  it('has a prefix of 6011 and a length of 19', function() {
+    detectNetwork('6011567890123456789').should.equal('Discover');
+  });
 });
 
-describe('Maestro', function() {
-  // Write full test coverage for the Maestro card
-});
+// describe('Maestro', function() {
+//   // Write full test coverage for the Maestro card
+// });
 
-describe('should support China UnionPay')
-describe('should support Switch')
+// describe('should support China UnionPay')
+// describe('should support Switch')

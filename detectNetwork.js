@@ -61,6 +61,15 @@ var detectNetwork = function(cardNumber) {
     return 'American Express';
   }
 
+  // Check Discover length and prefix
+  let isDiscover = 
+    cardNumArr.slice(0,4).join('') == '6011'
+    &&
+    (cardNumber.length === 16 || cardNumber.length === 19);
+
+  if (isDiscover) {
+    return 'Discover';
+  }
 
 };
 
