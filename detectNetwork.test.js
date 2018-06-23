@@ -161,8 +161,27 @@ describe('Maestro', function() {
         detectNetwork(prefix + '1'.repeat(length-4)).should.equal('Maestro');
       });
     }
-}
+  }
 });
 
-// describe('should support China UnionPay')
-// describe('should support Switch')
+describe('China UnionPay', function() {
+  it('has a prefix of 65 and a length of 16', function() {
+    detectNetwork('6512345678901234').should.equal('China UnionPay');
+  });
+  it('has a prefix of 65 and a length of 19', function() {
+    detectNetwork('6512345678901234123').should.equal('China UnionPay');
+  });
+});
+
+describe('Switch', function() {
+  let switchLengths = [16, 19]
+  // Loop through each length in the array
+  for (length of switchLengths) {
+    // Test all possible prefix and length combinations
+    for (let prefix = 644; prefix <= 649; prefix++) {
+      it('has a prefix of ' + prefix + ' and length of ' + length, function() {
+        detectNetwork(prefix + '1'.repeat(length-3)).should.equal('Switch');
+      });
+    }
+  }
+});

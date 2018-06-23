@@ -80,6 +80,24 @@ var detectNetwork = function(cardNumber) {
     return 'Maestro';
   }
 
+  let isChinaUnionPay = 
+    cardNumber.slice(0,2) == '65'
+    &&
+    (cardNumber.length === 16 || cardNumber.length === 19);
+
+  if (isChinaUnionPay) {
+    return 'China UnionPay';
+  }
+
+  let isSwitch = 
+    (Number(cardNumber.slice(0,3)) >= 644 && Number(cardNumber.slice(0,3)) <= 649)
+    &&
+    (cardNumber.length === 16 || cardNumber.length === 19);
+
+  if (isSwitch) {
+    return 'Switch';
+  }
+
 };
 
 
