@@ -15,12 +15,37 @@ var detectNetwork = function(cardNumber) {
   // Create array representation of cardNumber  
   let cardNumArr = cardNumber.split('');
 
+  
+
+  // Switch always has a prefix of 4903, 4905, 4911, 4936, 
+  // 564182, 633110, 6333, or 6759 and a length of 16, 18, or 19.
+  // Heads up! Switch and Visa seem to have some overlapping 
+  // card numbers - in any apparent conflict, 
+  // you should choose the network with the longer prefix.
+  let isSwitch = 
+    ((cardNumber.slice(0,2) === '49' && (cardNumber.slice(2,4) === '03' || cardNumber.slice(2,4) === '05' || 
+      cardNumber.slice(2,4) === '11' || cardNumber.slice(2,4) === '36'))
+    ||
+    cardNumber.slice(0,6) == 564182 
+    || 
+    cardNumber.slice(0,6) == 633110
+    ||
+    cardNumber.slice(0,4) == 6333
+    ||
+    cardNumber.slice(0,4) == 6759)
+    &&
+    (cardNumber.length === 16 || cardNumber.length === 18 || cardNumber.length === 19);
+
+  if (isSwitch) {
+    return 'Switch';
+  }
+  
   // Check Visa length and prefix
   let isVisa = 
     cardNumArr[0] == 4
     &&
     (cardNumber.length === 13 || cardNumber.length === 16 || cardNumber.length === 19);
-  
+
   if (isVisa) {
     return 'Visa';
   }
@@ -99,10 +124,4 @@ var detectNetwork = function(cardNumber) {
   if (isChinaUnionPay) {
     return 'China UnionPay';
   }
-
-  let isSwitch;
-  if (isSwitch) {
-    return 'Switch';
-  }
-
 };
