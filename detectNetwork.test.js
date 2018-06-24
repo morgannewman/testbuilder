@@ -218,13 +218,35 @@ describe('China UnionPay', function() {
   }
 });
 
+// Switch always has a prefix of 4903, 4905, 4911, 4936, 
+// 564182, 633110, 6333, or 6759 and a length of 16, 18, or 19.
 describe('Switch', function() {
+  let fourNumPrefixes = [4903, 4905, 4911, 4936,6333, 6759];
+  let sixNumPrefixes = [564182, 633110];
+  let possibleLengths = [16, 18, 19];
+
+  for (length of possibleLengths) {
+    // Four number prefixes
+    for (prefix of fourNumPrefixes) {
+      +function(prefix, length) {
+        it('has a prefix of ' + prefix + ' and length of ' + length, function() {
+          detectNetwork(prefix + '1'.repeat(length-4)).should.equal('Switch');
+        });
+      }(prefix,length);
+    }
+    // Six number prefixes
+    for (prefix of sixNumPrefixes) {
+      +function(prefix, length) {
+        it('has a prefix of ' + prefix + ' and length of ' + length, function() {
+          detectNetwork(prefix + '1'.repeat(length-6)).should.equal('Switch');
+        });
+      }(prefix,length);
+    }
+  }
 });
 
 
 
-// Switch always has a prefix of 4903, 4905, 4911, 4936, 
-// 564182, 633110, 6333, or 6759 and a length of 16, 18, or 19.
 
 // Heads up! Switch and Visa seem to have some overlapping 
 // card numbers - in any apparent conflict, 
