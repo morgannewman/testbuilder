@@ -183,8 +183,49 @@ describe('Maestro', function() {
   }
 });
 
+
+// China UnionPay always has a prefix of 622126-622925, 
+// 624-626, or 6282-6288 and a length of 16-19.
 describe('China UnionPay', function() {
+  let possibleLengths = [16, 17, 18, 19];
+
+  // Iterate through each possible length
+  for (length of possibleLengths) {
+    // 622126-622925 numbers
+    for (let prefix = 622126; prefix <= 622925; prefix++) {
+      +function(prefix, length) {
+        it('has a prefix of ' + prefix + ' and length of ' + length, function() {
+          detectNetwork(prefix + '1'.repeat(length-6)).should.equal('China UnionPay');
+        });
+      }(prefix,length);
+    }
+    // 624-626 numbers
+    for (let prefix = 624; prefix <= 626; prefix++) {
+      +function(prefix, length) {
+        it('has a prefix of ' + prefix + ' and length of ' + length, function() {
+          detectNetwork(prefix + '1'.repeat(length-3)).should.equal('China UnionPay');
+        });
+      }(prefix,length);
+    }
+    // 6282-6288 numbers
+    for (let prefix = 6282; prefix <= 6288; prefix++) {
+      +function(prefix, length) {
+        it('has a prefix of ' + prefix + ' and length of ' + length, function() {
+          detectNetwork(prefix + '1'.repeat(length-4)).should.equal('China UnionPay');
+        });
+      }(prefix,length);
+    }
+  }
 });
 
 describe('Switch', function() {
 });
+
+
+
+// Switch always has a prefix of 4903, 4905, 4911, 4936, 
+// 564182, 633110, 6333, or 6759 and a length of 16, 18, or 19.
+
+// Heads up! Switch and Visa seem to have some overlapping 
+// card numbers - in any apparent conflict, 
+// you should choose the network with the longer prefix.
