@@ -85,7 +85,17 @@ var detectNetwork = function(cardNumber) {
     return 'Maestro';
   }
 
-  let isChinaUnionPay;
+  // China UnionPay always has a prefix of 622126-622925, 
+  // 624-626, or 6282-6288 and a length of 16-19.
+  let isChinaUnionPay = 
+    ((Number(cardNumber.slice(0,6)) >= 622126 && Number(cardNumber.slice(0,6)) <= 622925)
+    ||
+    (Number(cardNumber.slice(0,3)) >= 624 && Number(cardNumber.slice(0,3)) <= 626)
+    ||
+    (Number(cardNumber.slice(0,4)) >= 6282 && Number(cardNumber.slice(0,4)) <= 6288))
+    &&
+    (cardNumber.length >= 16 && cardNumber.length <= 19);
+
   if (isChinaUnionPay) {
     return 'China UnionPay';
   }
@@ -96,17 +106,3 @@ var detectNetwork = function(cardNumber) {
   }
 
 };
-
-
-detectNetwork('38345678901234');
-detectNetwork('39345678901234');
-detectNetwork('343456789012345');
-detectNetwork('373456789012345');
-detectNetwork('4123456789012');
-detectNetwork('4123456789012345');
-detectNetwork('4123456789012345678');
-detectNetwork('5112345678901234');
-detectNetwork('5212345678901234');
-detectNetwork('5312345678901234');
-detectNetwork('5412345678901234');
-detectNetwork('5512345678901234');
